@@ -4,12 +4,6 @@ name: CI-Build Trinity
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -44,4 +38,8 @@ jobs:
           cp /mingw64/bin/strip.exe /mingw64/bin/x86_64-w64-mingw32-strip.exe
           ./configure --cross-prefix=x86_64-w64-mingw32- --disable-gtk --enable-sdl --target-list=x86_64-softmmu --disable-werror
           make -j16
-          
+      - name: Upload APK (without runtime)
+        uses: actions/upload-artifact@v3
+        with:
+          name: test
+          path: TrinityEmulator/*
